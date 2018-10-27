@@ -130,8 +130,16 @@ config WLAN_FEATURE_DISA
 	bool "Enable DISA certification feature"
 	default n
 
-config WLAN_SPECTRAL_SCAN
-	bool "Enable Spectral Scan feature"
+config WLAN_FEATURE_OWE
+	bool "Enable OWE feature"
+	default n
+
+config WLAN_FEATURE_GMAC
+	bool "Enable GMAC feature"
+	default n
+
+config WLAN_FEATURE_SAE
+	bool "Enable SAE feature"
 	default n
 
 config WLAN_FEATURE_OWE
