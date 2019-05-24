@@ -251,7 +251,7 @@ struct ucred {
 #define PF_MAX		AF_MAX
 
 /* Maximum queue length specifiable by listen.  */
-#define SOMAXCONN	64
+#define SOMAXCONN	2064
 
 /* Flags we can use with send/ and recv. 
    Added those for 1003.1g not all are supported yet
