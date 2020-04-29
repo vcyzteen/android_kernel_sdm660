@@ -1930,7 +1930,7 @@ int gsi_stop_channel(unsigned long chan_hdl)
 	}
 
 	if (ctx->state == GSI_CHAN_STATE_STOP_IN_PROC) {
-		GSIERR("chan=%lu busy try again\n", chan_hdl);
+		GSIDBG("chan=%lu busy try again\n", chan_hdl);
 		res = -GSI_STATUS_AGAIN;
 		goto free_lock;
 	}
@@ -1999,7 +1999,7 @@ int gsi_stop_db_channel(unsigned long chan_hdl)
 	}
 
 	if (ctx->state == GSI_CHAN_STATE_STOP_IN_PROC) {
-		GSIERR("chan=%lu busy try again\n", chan_hdl);
+		GSIDBG("chan=%lu busy try again\n", chan_hdl);
 		res = -GSI_STATUS_AGAIN;
 		goto free_lock;
 	}
