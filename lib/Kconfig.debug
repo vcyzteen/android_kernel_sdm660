@@ -111,7 +111,37 @@ config DYNAMIC_DEBUG
 		nullarbor:~ # echo -n 'func svc_process -p' >
 						<debugfs>/dynamic_debug/control
 
-	  See Documentation/dynamic-debug-howto.txt for additional information.
+	  See Documentation/admin-guide/dynamic-debug-howto.rst for additional
+	  information.
+
+config DYNAMIC_DEBUG_CORE
+	bool "Enable core function of dynamic debug support"
+	depends on PRINTK
+	depends on (DEBUG_FS || PROC_FS)
+	help
+	  Enable core functional support of dynamic debug. It is useful
+	  when you want to tie dynamic debug to your kernel modules with
+	  DYNAMIC_DEBUG_MODULE defined for each of them, especially for
+	  the case of embedded system where the kernel image size is
+	  sensitive for people.
+
+config SYMBOLIC_ERRNAME
+	bool "Support symbolic error names in printf"
+	default n
+	help
+	  If you say Y here, the kernel's printf implementation will
+	  be able to print symbolic error names such as ENOSPC instead
+	  of the number 28. It makes the kernel image slightly larger
+	  (about 3KB), but can make the kernel logs easier to read.
+
+config DEBUG_BUGVERBOSE
+	bool "Verbose BUG() reporting (adds 70K)" if DEBUG_KERNEL && EXPERT
+	depends on BUG && (GENERIC_BUG || HAVE_DEBUG_BUGVERBOSE)
+	default n
+	help
+	  Say Y here to make BUG() panics output the file name and line number
+	  of the BUG call as well as the EIP and oops trace.  This aids
+	  debugging but costs about 70-100K of memory.
 
 endmenu # "printk and dmesg options"
 
