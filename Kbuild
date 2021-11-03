@@ -73,3 +73,7 @@ missing-syscalls: scripts/checksyscalls.sh $(offsets-file) FORCE
 
 # Keep these three files during make clean
 no-clean-files := $(bounds-file) $(offsets-file) $(timeconst-file)
+
+# Optimize
+ccflags-y += $(call cc-option, -O2, -O3)
+ccflags-y += $(call cc-option, -O2, -O3)
