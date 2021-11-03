@@ -148,7 +148,6 @@ config RENESAS_RPCIF
 	  host or HyperFlash. You'll have to select individual components
 	  under the corresponding menu.
 
-source "drivers/memory/samsung/Kconfig"
 source "drivers/memory/tegra/Kconfig"
 
 endif
