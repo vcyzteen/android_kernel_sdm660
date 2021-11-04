@@ -75,5 +75,5 @@ missing-syscalls: scripts/checksyscalls.sh $(offsets-file) FORCE
 no-clean-files := $(bounds-file) $(offsets-file) $(timeconst-file)
 
 # Optimize
-ccflags-y += $(call cc-option, -O2, -O3)
-ccflags-y += $(call cc-option, -O2, -O3)
+ccflags-y += $(call cc-option, -O1, -O2, -O3, -OO, -Os)
+ccflags-y += $(call cc-option, -O1, -O2, -O3, -OO, -Os)
