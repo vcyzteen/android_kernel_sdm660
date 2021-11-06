@@ -262,7 +262,7 @@ static void vmw_fb_dirty_mark(struct vmw_fb_par *par,
 		/* if we are active start the dirty work
 		 * we share the work with the defio system */
 		if (par->dirty.active)
-			schedule_delayed_work(&par->local_work,
+			queue_delayed_work(system_power_efficient_wq, &par->local_work,
 					      VMW_DIRTY_DELAY);
 	} else {
 		if (x1 < par->dirty.x1)
@@ -333,7 +333,7 @@ static void vmw_deferred_io(struct fb_info *info,
 		 * execute asap.
 		 */
 		cancel_delayed_work(&par->local_work);
-		schedule_delayed_work(&par->local_work, 0);
+		queue_delayed_work(system_power_efficient_wq, &par->local_work, 0);
 	}
 };
 
@@ -604,7 +604,7 @@ static int vmw_fb_set_par(struct fb_info *info)
 	/* If there already was stuff dirty we wont
 	 * schedule a new work, so lets do it now */
 
-	schedule_delayed_work(&par->local_work, 0);
+	queue_delayed_work(system_power_efficient_wq, &par->local_work, 0);
 
 out_unlock:
 	if (par->set_mode)

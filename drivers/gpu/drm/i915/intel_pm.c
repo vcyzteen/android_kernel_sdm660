@@ -6412,7 +6412,7 @@ void intel_enable_gt_powersave(struct drm_device *dev)
 		 * paths, so the _noresume version is enough (and in case of
 		 * runtime resume it's necessary).
 		 */
-		if (schedule_delayed_work(&dev_priv->rps.delayed_resume_work,
+		if (queue_delayed_work(system_power_efficient_wq, &dev_priv->rps.delayed_resume_work,
 					   round_jiffies_up_relative(HZ)))
 			intel_runtime_pm_get_noresume(dev_priv);
 	}

@@ -176,7 +176,7 @@ static void virtio_gpu_3d_fillrect(struct fb_info *info,
 	drm_fb_helper_sys_fillrect(info, rect);
 	virtio_gpu_dirty_update(&vfbdev->vgfb, true, rect->dx, rect->dy,
 			     rect->width, rect->height);
-	schedule_delayed_work(&vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
+	queue_delayed_work(system_power_efficient_wq, &vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
 }
 
 static void virtio_gpu_3d_copyarea(struct fb_info *info,
@@ -186,7 +186,7 @@ static void virtio_gpu_3d_copyarea(struct fb_info *info,
 	drm_fb_helper_sys_copyarea(info, area);
 	virtio_gpu_dirty_update(&vfbdev->vgfb, true, area->dx, area->dy,
 			   area->width, area->height);
-	schedule_delayed_work(&vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
+	queue_delayed_work(system_power_efficient_wq, &vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
 }
 
 static void virtio_gpu_3d_imageblit(struct fb_info *info,
@@ -196,7 +196,7 @@ static void virtio_gpu_3d_imageblit(struct fb_info *info,
 	drm_fb_helper_sys_imageblit(info, image);
 	virtio_gpu_dirty_update(&vfbdev->vgfb, true, image->dx, image->dy,
 			     image->width, image->height);
-	schedule_delayed_work(&vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
+	queue_delayed_work(system_power_efficient_wq, &vfbdev->work, VIRTIO_GPU_FBCON_POLL_PERIOD);
 }
 
 static struct fb_ops virtio_gpufb_ops = {

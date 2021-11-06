@@ -423,7 +423,7 @@ static void intel_fbc_schedule_enable(struct intel_crtc *crtc)
 	 *
 	 * WaFbcWaitForVBlankBeforeEnable:ilk,snb
 	 */
-	schedule_delayed_work(&work->work, msecs_to_jiffies(50));
+	queue_delayed_work(system_power_efficient_wq, &work->work, msecs_to_jiffies(50));
 }
 
 static void __intel_fbc_disable(struct drm_i915_private *dev_priv)

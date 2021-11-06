@@ -735,7 +735,7 @@ void intel_psr_flush(struct drm_device *dev,
 	}
 
 	if (!dev_priv->psr.active && !dev_priv->psr.busy_frontbuffer_bits)
-		schedule_delayed_work(&dev_priv->psr.work,
+		queue_delayed_work(system_power_efficient_wq, &dev_priv->psr.work,
 				      msecs_to_jiffies(delay_ms));
 	mutex_unlock(&dev_priv->psr.lock);
 }

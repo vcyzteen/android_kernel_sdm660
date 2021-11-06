@@ -651,7 +651,7 @@ static void sde_encoder_underrun_callback(struct drm_encoder *drm_enc,
 	/* schedule delayed work if it has not scheduled or executed earlier */
 	if ((!atomic_read(&sde_enc->last_underrun_ts)) &&
 		(!atomic_read(&sde_enc->underrun_cnt_dwork))) {
-		schedule_delayed_work(&sde_enc->dwork,
+		queue_delayed_work(system_power_efficient_wq, &sde_enc->dwork,
 			msecs_to_jiffies(SDE_ENCODER_UNDERRUN_TIMEOUT));
 	}
 

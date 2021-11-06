@@ -290,7 +290,7 @@ static void amdgpu_vce_idle_work_handler(struct work_struct *work)
 							    AMD_CG_STATE_GATE);
 		}
 	} else {
-		schedule_delayed_work(&adev->vce.idle_work,
+		queue_delayed_work(system_power_efficient_wq, &adev->vce.idle_work,
 				      msecs_to_jiffies(VCE_IDLE_TIMEOUT_MS));
 	}
 }
@@ -306,7 +306,7 @@ static void amdgpu_vce_note_usage(struct amdgpu_device *adev)
 {
 	bool streams_changed = false;
 	bool set_clocks = !cancel_delayed_work_sync(&adev->vce.idle_work);
-	set_clocks &= schedule_delayed_work(&adev->vce.idle_work,
+	set_clocks &= queue_delayed_work(system_power_efficient_wq, &adev->vce.idle_work,
 					    msecs_to_jiffies(VCE_IDLE_TIMEOUT_MS));
 
 	if (adev->pm.dpm_enabled) {

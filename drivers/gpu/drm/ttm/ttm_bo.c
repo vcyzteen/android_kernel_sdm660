@@ -463,7 +463,7 @@ static void ttm_bo_cleanup_refs_or_queue(struct ttm_buffer_object *bo)
 	list_add_tail(&bo->ddestroy, &bdev->ddestroy);
 	spin_unlock(&glob->lru_lock);
 
-	schedule_delayed_work(&bdev->wq,
+	queue_delayed_work(system_power_efficient_wq, &bdev->wq,
 			      ((HZ / 100) < 1) ? 1 : HZ / 100);
 }
 
@@ -613,7 +613,7 @@ static void ttm_bo_delayed_workqueue(struct work_struct *work)
 	    container_of(work, struct ttm_bo_device, wq.work);
 
 	if (ttm_bo_delayed_delete(bdev, false)) {
-		schedule_delayed_work(&bdev->wq,
+		queue_delayed_work(system_power_efficient_wq, &bdev->wq,
 				      ((HZ / 100) < 1) ? 1 : HZ / 100);
 	}
 }
@@ -651,7 +651,7 @@ EXPORT_SYMBOL(ttm_bo_lock_delayed_workqueue);
 void ttm_bo_unlock_delayed_workqueue(struct ttm_bo_device *bdev, int resched)
 {
 	if (resched)
-		schedule_delayed_work(&bdev->wq,
+		queue_delayed_work(system_power_efficient_wq, &bdev->wq,
 				      ((HZ / 100) < 1) ? 1 : HZ / 100);
 }
 EXPORT_SYMBOL(ttm_bo_unlock_delayed_workqueue);

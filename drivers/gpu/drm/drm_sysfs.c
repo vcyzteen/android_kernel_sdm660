@@ -206,7 +206,7 @@ static ssize_t status_store(struct device *device,
 
 		dev->mode_config.delayed_event = true;
 		if (dev->mode_config.poll_enabled)
-			schedule_delayed_work(&dev->mode_config.output_poll_work,
+			queue_delayed_work(system_power_efficient_wq, &dev->mode_config.output_poll_work,
 					      0);
 	}
 

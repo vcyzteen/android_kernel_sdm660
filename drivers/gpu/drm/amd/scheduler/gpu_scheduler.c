@@ -434,7 +434,7 @@ static int amd_sched_main(void *param)
 
 		if (sched->timeout != MAX_SCHEDULE_TIMEOUT) {
 			INIT_DELAYED_WORK(&s_fence->dwork, amd_sched_fence_work_func);
-			schedule_delayed_work(&s_fence->dwork, sched->timeout);
+			queue_delayed_work(system_power_efficient_wq, &s_fence->dwork, sched->timeout);
 			spin_lock_irqsave(&sched->fence_list_lock, flags);
 			list_add_tail(&s_fence->list, &sched->fence_list);
 			spin_unlock_irqrestore(&sched->fence_list_lock, flags);
