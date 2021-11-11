@@ -234,8 +234,8 @@
 #define CMD_USB_2_MODE				0
 #define CMD_USB_3_MODE				0x4
 #define CMD_USB_1_5_AC_CTRL_MASK		SMB1351_MASK(1, 0)
-#define CMD_USB_100_MODE			0
-#define CMD_USB_500_MODE			0x2
+#define CMD_USB_150_MODE			0
+#define CMD_USB_900_MODE			0x2
 #define CMD_USB_AC_MODE				0x1
 
 #define CMD_CHG_REG				0x32
