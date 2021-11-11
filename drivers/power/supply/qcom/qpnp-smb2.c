@@ -44,9 +44,9 @@ static struct smb_params v1_params = {
 	.fcc			= {
 		.name	= "fast charge current",
 		.reg	= FAST_CHARGE_CURRENT_CFG_REG,
-		.min_u	= 0,
+		.min_u	= 250000,
 		.max_u	= 4500000,
-		.step_u	= 25000,
+		.step_u	= 250000,
 	},
 	.fv			= {
 		.name	= "float voltage",
@@ -58,9 +58,9 @@ static struct smb_params v1_params = {
 	.usb_icl		= {
 		.name	= "usb input current limit",
 		.reg	= USBIN_CURRENT_LIMIT_CFG_REG,
-		.min_u	= 0,
+		.min_u	= 250000,
 		.max_u	= 4800000,
-		.step_u	= 25000,
+		.step_u	= 250000,
 	},
 	.icl_stat		= {
 		.name	= "input current limit status",
@@ -1149,7 +1149,7 @@ static int smb2_batt_set_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_CURRENT_QNOVO:
 		vote(chg->pl_disable_votable, PL_QNOVO_VOTER,
-			val->intval != -EINVAL && val->intval < 2000000, 0);
+			val->intval != -EINVAL && val->intval < 3000000, 0);
 		if (val->intval == -EINVAL) {
 			vote(chg->fcc_votable, BATT_PROFILE_VOTER,
 					true, chg->batt_profile_fcc_ua);
