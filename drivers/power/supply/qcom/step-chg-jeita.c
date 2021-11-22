@@ -89,8 +89,8 @@ static struct step_chg_cfg step_chg_config = {
 	.fcc_cfg	= {
 		/* VBAT_LOW	VBAT_HIGH	FCC */
 		{3600000,	4000000,	3000000},
-		{4001000,	4200000,	3000000},
-		{4201000,	4400000,	3000000},
+		{4001000,	4200000,	2800000},
+		{4201000,	4400000,	2000000},
 	},
 	/*
 	 *	SOC STEP-CHG configuration example.
@@ -387,7 +387,7 @@ static void status_change_work(struct work_struct *work)
 	if (reschedule_us == 0)
 		__pm_relax(chip->step_chg_ws);
 	else
-		queue_delayed_work(system_power_efficient_wq, &chip->status_change_work,
+		schedule_delayed_work(&chip->status_change_work,
 				usecs_to_jiffies(reschedule_us));
 }
 
@@ -402,7 +402,7 @@ static int step_chg_notifier_call(struct notifier_block *nb,
 
 	if ((strcmp(psy->desc->name, "battery") == 0)) {
 		__pm_stay_awake(chip->step_chg_ws);
-		queue_delayed_work(system_power_efficient_wq, &chip->status_change_work, 0);
+		schedule_delayed_work(&chip->status_change_work, 0);
 	}
 
 	return NOTIFY_OK;

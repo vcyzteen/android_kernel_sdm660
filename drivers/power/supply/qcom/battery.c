@@ -1,4 +1,4 @@
-/* Copyright (c) 2017,2019 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017 The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -372,7 +372,7 @@ static void pl_taper_work(struct work_struct *work)
 		rerun_election(chip->fcc_votable);
 		pl_dbg(chip, PR_PARALLEL, "taper entry scheduling work after %d ms\n",
 				PL_TAPER_WORK_DELAY_MS);
-		queue_delayed_work(system_power_efficient_wq, &chip->pl_taper_work,
+		schedule_delayed_work(&chip->pl_taper_work,
 				msecs_to_jiffies(PL_TAPER_WORK_DELAY_MS));
 		return;
 	}
@@ -523,7 +523,7 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 			vote(chip->pl_awake_votable, FCC_STEPPER_VOTER,
 					true, 0);
 			get_fcc_step_update_params(chip, total_fcc_ua, 0);
-			queue_delayed_work(system_power_efficient_wq, &chip->fcc_step_update_work, 0);
+			schedule_delayed_work(&chip->fcc_step_update_work, 0);
 
 			return 0;
 		}
@@ -545,7 +545,7 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 					true, 0);
 			get_fcc_step_update_params(chip, master_fcc_ua,
 					slave_fcc_ua);
-			queue_delayed_work(system_power_efficient_wq, &chip->fcc_step_update_work, 0);
+			schedule_delayed_work(&chip->fcc_step_update_work, 0);
 		} else {
 			/*
 			 * If there is an increase in slave share
@@ -789,7 +789,7 @@ stepper_exit:
 	chip->slave_fcc_ua = parallel_fcc;
 
 	if (reschedule_ms) {
-		queue_delayed_work(system_power_efficient_wq, &chip->fcc_step_update_work,
+		schedule_delayed_work(&chip->fcc_step_update_work,
 				msecs_to_jiffies(reschedule_ms));
 		pr_debug("Rescheduling FCC_STEPPER work\n");
 	} else {
@@ -868,7 +868,7 @@ static int usb_icl_vote_callback(struct votable *votable, void *data,
 	if (icl_ua <= 1400000)
 		vote(chip->pl_enable_votable_indirect, USBIN_I_VOTER, false, 0);
 	else
-		queue_delayed_work(system_power_efficient_wq, &chip->status_change_work,
+		schedule_delayed_work(&chip->status_change_work,
 						msecs_to_jiffies(PL_DELAY_MS));
 
 	/* rerun AICL */
@@ -989,7 +989,7 @@ static int pl_disable_vote_callback(struct votable *votable,
 			if (pval.intval == POWER_SUPPLY_CHARGE_TYPE_TAPER) {
 				pl_dbg(chip, PR_PARALLEL,
 					"pl enabled in Taper scheduing work\n");
-				queue_delayed_work(system_power_efficient_wq, &chip->pl_taper_work, 0);
+				schedule_delayed_work(&chip->pl_taper_work, 0);
 			}
 		}
 	} else {
@@ -1014,7 +1014,7 @@ static int pl_disable_vote_callback(struct votable *votable,
 
 		cancel_delayed_work_sync(&chip->pl_awake_work);
 		if (chip->pl_awake_votable)
-			queue_delayed_work(system_power_efficient_wq, &chip->pl_awake_work,
+			schedule_delayed_work(&chip->pl_awake_work,
 							msecs_to_jiffies(5000));
 	}
 
@@ -1143,7 +1143,7 @@ static void handle_main_charge_type(struct pl_data *chip)
 		&& (pval.intval == POWER_SUPPLY_CHARGE_TYPE_TAPER)) {
 		chip->charge_type = pval.intval;
 		pl_dbg(chip, PR_PARALLEL, "taper entry scheduling work\n");
-		queue_delayed_work(system_power_efficient_wq, &chip->pl_taper_work, 0);
+		schedule_delayed_work(&chip->pl_taper_work, 0);
 		return;
 	}
 
@@ -1298,7 +1298,7 @@ static int pl_notifier_call(struct notifier_block *nb,
 	if ((strcmp(psy->desc->name, "parallel") == 0)
 	    || (strcmp(psy->desc->name, "battery") == 0)
 	    || (strcmp(psy->desc->name, "main") == 0))
-		queue_delayed_work(system_power_efficient_wq, &chip->status_change_work, 0);
+		schedule_delayed_work(&chip->status_change_work, 0);
 
 	return NOTIFY_OK;
 }
@@ -1344,12 +1344,6 @@ int qcom_batt_init(void)
 	chip->pl_ws = wakeup_source_register("qcom-battery");
 	if (!chip->pl_ws)
 		goto cleanup;
-
-	INIT_DELAYED_WORK(&chip->status_change_work, status_change_work);
-	INIT_DELAYED_WORK(&chip->pl_taper_work, pl_taper_work);
-	INIT_WORK(&chip->pl_disable_forever_work, pl_disable_forever_work);
-	INIT_DELAYED_WORK(&chip->pl_awake_work, pl_awake_work);
-	INIT_DELAYED_WORK(&chip->fcc_step_update_work, fcc_step_update_work);
 
 	chip->fcc_votable = create_votable("FCC", VOTE_MIN,
 					pl_fcc_vote_callback,
@@ -1404,6 +1398,12 @@ int qcom_batt_init(void)
 	}
 
 	vote(chip->pl_disable_votable, PL_INDIRECT_VOTER, true, 0);
+
+	INIT_DELAYED_WORK(&chip->status_change_work, status_change_work);
+	INIT_DELAYED_WORK(&chip->pl_taper_work, pl_taper_work);
+	INIT_WORK(&chip->pl_disable_forever_work, pl_disable_forever_work);
+	INIT_DELAYED_WORK(&chip->pl_awake_work, pl_awake_work);
+	INIT_DELAYED_WORK(&chip->fcc_step_update_work, fcc_step_update_work);
 
 	rc = pl_register_notifier(chip);
 	if (rc < 0) {

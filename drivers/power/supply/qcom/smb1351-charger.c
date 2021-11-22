@@ -234,8 +234,8 @@
 #define CMD_USB_2_MODE				0
 #define CMD_USB_3_MODE				0x4
 #define CMD_USB_1_5_AC_CTRL_MASK		SMB1351_MASK(1, 0)
-#define CMD_USB_150_MODE			0
-#define CMD_USB_900_MODE			0x2
+#define CMD_USB_100_MODE			0
+#define CMD_USB_500_MODE			0x2
 #define CMD_USB_AC_MODE				0x1
 
 #define CMD_CHG_REG				0x32
@@ -372,8 +372,8 @@
 #define IRQ_WDOG_TIMEOUT_BIT			BIT(0)
 
 /* constants */
-#define USB2_MIN_CURRENT_MA			150
-#define USB2_MAX_CURRENT_MA			900
+#define USB2_MIN_CURRENT_MA			100
+#define USB2_MAX_CURRENT_MA			500
 #define USB3_MIN_CURRENT_MA			150
 #define USB3_MAX_CURRENT_MA			900
 #define SMB1351_IRQ_REG_COUNT			8
@@ -520,14 +520,14 @@ struct irq_handler_info {
 	struct smb_irq_info	irq_info[4];
 };
 
-/* VCYZTEEN USB input charge current */
+/* USB input charge current */
 static int usb_chg_current[] = {
-	1000, 1100, 1200, 1300, 1500, 1600,
+	500, 685, 1000, 1100, 1200, 1300, 1500, 1600,
 	1700, 1800, 2000, 2200, 2500, 3000,
 };
 
 static int fast_chg_current[] = {
-	1100, 1200, 1400, 1600, 1800, 2000, 2200,
+	1000, 1200, 1400, 1600, 1800, 2000, 2200,
 	2400, 2600, 2800, 3000, 3400, 3600, 3800,
 	4000, 4640,
 };
@@ -1245,17 +1245,17 @@ static int smb1351_set_usb_chg_current(struct smb1351_charger *chip,
 		current_ma = USB2_MIN_CURRENT_MA;
 
 	if (current_ma == USB2_MIN_CURRENT_MA) {
-		/* VCYZTEEN USB 2.0 - 150mA */
-		reg = CMD_USB_2_MODE | CMD_USB_150_MODE;
+		/* USB 2.0 - 100mA */
+		reg = CMD_USB_2_MODE | CMD_USB_100_MODE;
 	} else if (current_ma == USB3_MIN_CURRENT_MA) {
-		/* VCYZTEEN USB 3.0 - 150mA */
-		reg = CMD_USB_3_MODE | CMD_USB_150_MODE;
+		/* USB 3.0 - 150mA */
+		reg = CMD_USB_3_MODE | CMD_USB_100_MODE;
 	} else if (current_ma == USB2_MAX_CURRENT_MA) {
-		/* VCYZTEEN USB 2.0 - 900mA */
-		reg = CMD_USB_2_MODE | CMD_USB_900_MODE;
+		/* USB 2.0 - 500mA */
+		reg = CMD_USB_2_MODE | CMD_USB_500_MODE;
 	} else if (current_ma == USB3_MAX_CURRENT_MA) {
-		/* VCYZTEEN USB 3.0 - 900mA */
-		reg = CMD_USB_3_MODE | CMD_USB_900_MODE;
+		/* USB 3.0 - 900mA */
+		reg = CMD_USB_3_MODE | CMD_USB_500_MODE;
 	} else if (current_ma > USB2_MAX_CURRENT_MA) {
 		/* HC mode  - if none of the above */
 		reg = CMD_USB_AC_MODE;
@@ -1396,7 +1396,7 @@ static int smb1351_battery_get_property(struct power_supply *psy,
 		val->intval = smb1351_get_prop_batt_temp(chip);
 		break;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
-		val->intval = POWER_SUPPLY_TECHNOLOGY_LIPO;
+		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
 		break;
 	case POWER_SUPPLY_PROP_MODEL_NAME:
 		val->strval = "smb1351";
