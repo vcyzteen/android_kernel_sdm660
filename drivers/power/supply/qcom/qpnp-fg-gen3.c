@@ -5130,8 +5130,6 @@ static void fg_get_online_status(struct fg_chip *chip){
 	chip->online_status = online;
 }
 
-extern unsigned long asus_qpnp_rtc_read_time(void);
-
 static void update_battery_health(struct fg_chip *chip){
 	int bat_capacity, bat_current, delta_p;
 	unsigned long T;
@@ -5158,7 +5156,6 @@ static void update_battery_health(struct fg_chip *chip){
 
 	if(bat_capacity == g_health_upgrade_start_level && g_bat_health_data.start_time == 0){
 		g_bathealth_trigger = true;
-		g_bat_health_data.start_time = asus_qpnp_rtc_read_time();
 	}
 	if(bat_capacity > g_health_upgrade_end_level){
 		g_bathealth_trigger = false;
@@ -5181,7 +5178,6 @@ static void update_battery_health(struct fg_chip *chip){
 		if(g_health_debug_enable)
 			BAT_DBG("accumulate_time(%llu), accumulate_current(%llu), bat_current(%d), bat_current_avg(%llu), bat_capacity(%d)", g_bat_health_data.accumulate_time, g_bat_health_data.accumulate_current/1000, g_bat_health_data.bat_current/1000, g_bat_health_data.bat_current_avg/1000, bat_capacity);
 		if(bat_capacity >= g_health_upgrade_end_level){
-			g_bat_health_data.end_time = asus_qpnp_rtc_read_time();
 			delta_p = g_health_upgrade_end_level - g_health_upgrade_start_level;
 			T = g_bat_health_data.end_time - g_bat_health_data.start_time;
 			health_t = (g_bat_health_data.bat_current_avg*T)*10/(unsigned long long)(ZS630KL_DESIGNED_CAPACITY*delta_p)/(unsigned long long)360;
