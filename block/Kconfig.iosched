@@ -71,7 +71,7 @@ config BFQ_GROUP_IOSCHED
 
 choice
 	prompt "Default I/O scheduler"
-	default DEFAULT_DEADLINE
+	default DEFAULT_BFQ
 	help
 	  Select the I/O scheduler which will be used by default for all
 	  block devices.
