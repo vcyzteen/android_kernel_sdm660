@@ -2712,17 +2712,17 @@ int smblib_get_prop_die_health(struct smb_charger *chg,
 
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
-/* Huaqin add for ZQL1650-1287 factory version remove before BC1.2 500mA before adapter id 1000mA by fangaijun at 2018/5/8 start */
+/* Huaqin add for ZQL1650-1287 factory version remove before BC1.3000mA before adapter id 1000mA by fangaijun at 2018/5/8 start */
 #ifdef HQ_BUILD_FACTORY
-/* Huaqin add for ZQL1650-71 before BC1.2 500mA before adapter id 1000mA by fangaijun at 2018/4/4 start */
-#define DCP_CURRENT_UA			2000000
-/* Huaqin add for ZQL1650-71 before BC1.2 500mA before adapter id 1000mA by fangaijun at 2018/4/4 end */
+/* Huaqin add for ZQL1650-71 before BC1.3000mA before adapter id 1000mA by fangaijun at 2018/4/4 start */
+#define DCP_CURRENT_UA			3000000
+/* Huaqin add for ZQL1650-71 before BC1.3000mA before adapter id 1000mA by fangaijun at 2018/4/4 end */
 #else
-#define DCP_CURRENT_UA			500000
+#define DCP_CURRENT_UA			1500000
 #endif
-/* Huaqin add for ZQL1650-1287 factory version remove before BC1.2 500mA before adapter id 1000mA by fangaijun at 2018/5/8 end */
+/* Huaqin add for ZQL1650-1287 factory version remove before BC1.3000mA before adapter id 1000mA by fangaijun at 2018/5/8 end */
 #define HVDCP_CURRENT_UA		3000000
-#define TYPEC_DEFAULT_CURRENT_UA	900000
+#define TYPEC_DEFAULT_CURRENT_UA	1000000
 #define TYPEC_MEDIUM_CURRENT_UA		1500000
 #define TYPEC_HIGH_CURRENT_UA		3000000
 static int get_rp_based_dcp_current(struct smb_charger *chg, int typec_mode)
@@ -3577,13 +3577,13 @@ int smbchg_jeita_judge_state(int old_State, int batt_tempr)
 	//0 <= batt_tempr < 10
 	} else if (batt_tempr < 100) {
 		result_State = JEITA_STATE_RANGE_0_to_100;
-	//10 <= batt_tempr < 50
-	} else if (batt_tempr < 500) {
+	//10 <= batt_tempr < 40
+	} else if (batt_tempr < 400) {
 		result_State = JEITA_STATE_RANGE_100_to_500;
-	//50 <= batt_tempr < 60
-	} else if (batt_tempr < 600) {
+	//40 <= batt_tempr < 42
+	} else if (batt_tempr < 420) {
 		result_State = JEITA_STATE_RANGE_500_to_600;
-	//60 <= batt_tempr
+	//42 <= batt_tempr
 	} else{
 		result_State = JEITA_STATE_LARGER_THAN_600;
 	}
