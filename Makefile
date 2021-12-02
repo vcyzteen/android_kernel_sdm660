@@ -860,6 +860,7 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
 # incompatible with -mindirect-branch=thunk-extern
 ifdef CONFIG_RETPOLINE
 KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
+KBUILD_CFLAGS += $(call cc-option,-mzero-caller-saved-regs=used)
 endif
 
 # use the deterministic mode of AR if available
