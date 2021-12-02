@@ -659,6 +659,9 @@ KBUILD_CFLAGS += -O2
 else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 KBUILD_CFLAGS += -O3
 KBUILD_CFLAGS += $(call cc-option, -fno-tree-loop-vectorize)
+KBUILD_CFLAGS += $(call cc-option, -ffunction-sections)
+KBUILD_CFLAGS += $(call cc-option, -fdata-sections)
+KBUILD_LDFLAGS += -Wl,--gc-sections
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
