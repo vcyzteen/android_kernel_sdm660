@@ -185,10 +185,10 @@ static inline struct schedtune *parent_st(struct schedtune *st)
  */
 static struct schedtune
 root_schedtune = {
-	.boost	= 100,
+	.boost	= 0,
 #ifdef CONFIG_SCHED_HMP
 	.sched_boost_no_override = false,
-	.sched_boost_enabled = true,
+	.sched_boost_enabled = false,
 	.sched_boost_enabled_backup = false,
 	.colocate = false,
 	.colocate_update_disabled = false,
@@ -277,7 +277,7 @@ DEFINE_PER_CPU(struct boost_groups, cpu_boost_groups);
 static inline void init_sched_boost(struct schedtune *st)
 {
 	st->sched_boost_no_override = false;
-	st->sched_boost_enabled = true;
+	st->sched_boost_enabled = false;
 	st->sched_boost_enabled_backup = false;
 	st->colocate = false;
 	st->colocate_update_disabled = false;
