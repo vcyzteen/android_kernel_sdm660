@@ -12,7 +12,7 @@
 #include "tune.h"
 
 #ifdef CONFIG_CGROUP_SCHEDTUNE
-bool schedtune_initialized = false;
+bool schedtune_initialized = true;
 #endif
 
 unsigned int sysctl_sched_cfs_boost __read_mostly;
@@ -185,11 +185,11 @@ static inline struct schedtune *parent_st(struct schedtune *st)
  */
 static struct schedtune
 root_schedtune = {
-	.boost	= 0,
+	.boost	= 100,
 #ifdef CONFIG_SCHED_HMP
 	.sched_boost_no_override = false,
 	.sched_boost_enabled = true,
-	.sched_boost_enabled_backup = true,
+	.sched_boost_enabled_backup = false,
 	.colocate = false,
 	.colocate_update_disabled = false,
 #endif
@@ -240,7 +240,7 @@ schedtune_accept_deltas(int nrg_delta, int cap_delta,
  *    implementation especially for the computation of the per-CPU boost
  *    value
  */
-#define BOOSTGROUPS_COUNT 5
+#define BOOSTGROUPS_COUNT 16
 
 /* Array of configured boostgroups */
 static struct schedtune *allocated_group[BOOSTGROUPS_COUNT] = {
@@ -278,7 +278,7 @@ static inline void init_sched_boost(struct schedtune *st)
 {
 	st->sched_boost_no_override = false;
 	st->sched_boost_enabled = true;
-	st->sched_boost_enabled_backup = st->sched_boost_enabled;
+	st->sched_boost_enabled_backup = false;
 	st->colocate = false;
 	st->colocate_update_disabled = false;
 }
