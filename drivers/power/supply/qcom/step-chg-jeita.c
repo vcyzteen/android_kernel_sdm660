@@ -124,7 +124,7 @@ static struct jeita_fcc_cfg jeita_fcc_config = {
 		{0,		100,		3000000},
 		{101,		200,		3000000},
 		{201,		400,		3000000},
-		{451,		420,		3000000},
+		{351,		420,		3000000},
 	},
 };
 
@@ -134,9 +134,9 @@ static struct jeita_fv_cfg jeita_fv_config = {
 	.hysteresis	= 10, /* 1degC hysteresis */
 	.fv_cfg		= {
 		/* TEMP_LOW	TEMP_HIGH	FCC */
-		{0,		100,		4200000},
-		{101,		400,		4200000},
-		{451,		420,		4200000},
+		{0,		100,		3000000},
+		{101,		400,		3000000},
+		{351,		420,		3000000},
 	},
 };
 
