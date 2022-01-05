@@ -395,14 +395,12 @@ static int _cpu_down(unsigned int cpu, int tasks_frozen)
 	 * For CONFIG_PREEMPT we have preemptible RCU and its sync_rcu() might
 	 * not imply sync_sched(), so wait for both.
 	 *
-	 * Do sync before park smpboot threads to take care the rcu boost case.
+	 * Don't do sync before park smpboot threads to take care the rcu boost case.
 	 */
 	if (IS_ENABLED(CONFIG_PREEMPT))
-		synchronize_rcu_mult(call_rcu, call_rcu_sched);
-	else
-		synchronize_rcu();
+		synchronize_sched();
 
-	smpboot_park_threads(cpu);
+	    synchronize_rcu();
 
 	/*
 	 * Prevent irq alloc/free while the dying cpu reorganizes the
