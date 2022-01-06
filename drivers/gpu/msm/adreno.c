@@ -54,6 +54,9 @@ MODULE_PARM_DESC(nopreempt, "Disable GPU preemption");
 #define DRIVER_VERSION_MAJOR   3
 #define DRIVER_VERSION_MINOR   1
 
+/* Number of times to try hard reset */
+#define NUM_TIMES_RESET_RETRY 0
+
 #define KGSL_LOG_LEVEL_DEFAULT 0
 
 static void adreno_input_work(struct work_struct *work);
