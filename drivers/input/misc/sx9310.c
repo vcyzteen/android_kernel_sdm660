@@ -43,7 +43,7 @@
 #define SX9310_VIO_MAX_UV       1800000
 
 /* Huaqin add sar switcher by chenyijun5 at 2018/03/20 start*/
-bool sar_switcher = 0;//Indonesia set sar_switcher to 1
+bool sar_switcher = 1; // Indonesia set sar_switcher to 1
 module_param(sar_switcher, bool, 0644);
 MODULE_PARM_DESC(sar_switcher, "Control sarsensor open or close.");
 /* Huaqin add sar switcher by chenyijun5 at 2018/03/20 end*/
@@ -174,13 +174,13 @@ static irqreturn_t sx93XX_interrupt_thread(int irq, void *data)
 	psx93XX_t this = 0;
 
 	this = data;
-	//mutex_lock(&this->mutex);
+	mutex_lock(&this->mutex);
 	dev_dbg(this->pdev, "sx93XX_irq\n");
 	if ((!this->get_nirq_low) || this->get_nirq_low()) {
 		sx93XX_process_interrupt(this, 1);
 	} else
-		dev_err(this->pdev, "sx93XX_irq - nirq read high\n");
-	//mutex_unlock(&this->mutex);
+		dev_dbg(this->pdev, "sx93XX_irq - nirq read high\n");
+	mutex_unlock(&this->mutex);
 
 	return IRQ_HANDLED;
 }
