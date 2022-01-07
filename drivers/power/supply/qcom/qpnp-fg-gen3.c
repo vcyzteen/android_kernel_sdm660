@@ -182,7 +182,7 @@
 static bool g_bathealth_initialized = false;
 static bool g_bathealth_trigger = false;
 static bool g_last_bathealth_trigger = false;
-static bool g_health_debug_enable = true;
+static bool g_health_debug_enable = false;
 static bool g_health_upgrade_enable = true;
 static int g_health_upgrade_index = 0;
 static int g_health_upgrade_start_level = BAT_HEALTH_START_LEVEL;
@@ -1472,14 +1472,9 @@ static int fg_load_learned_cap_from_sram(struct fg_chip *chip)
 				CAPACITY_DELTA_DECIPCT, 1000);
 		/*
 		 * If the learned capacity is out of range by 50% from the
-		 * nominal capacity, then overwrite the learned capacity with
+		 * nominal capacity, then don't overwrite the learned capacity with
 		 * the nominal capacity.
 		 */
-		if (chip->cl.nom_cap_uah && delta_cc_uah > pct_nom_cap_uah) {
-			fg_dbg(chip, FG_CAP_LEARN, "learned_cc_uah: %lld is higher than expected, capping it to nominal: %lld\n",
-				chip->cl.learned_cc_uah, chip->cl.nom_cap_uah);
-			chip->cl.learned_cc_uah = chip->cl.nom_cap_uah;
-		}
 
 		rc = fg_save_learned_cap_to_sram(chip);
 		if (rc < 0)
@@ -3724,8 +3719,8 @@ static int fg_force_esr_meas(struct fg_chip *chip)
 	 */
 	mutex_unlock(&chip->qnovo_esr_ctrl_lock);
 
-	/* wait 1.5 seconds for hw to measure ESR */
-	msleep(1500);
+	/* wait 1.0 seconds for hw to measure ESR */
+	msleep(1000);
 
 	mutex_lock(&chip->qnovo_esr_ctrl_lock);
 	rc = fg_masked_write(chip, BATT_INFO_TM_MISC1(chip),
@@ -4489,42 +4484,7 @@ static int fg_memif_init(struct fg_chip *chip)
 	return fg_ima_init(chip);
 }
 
-static int fg_adjust_timebase(struct fg_chip *chip)
-{
-	int rc = 0, die_temp;
-	s32 time_base = 0;
-	u8 buf[2] = {0};
-
-	if ((chip->wa_flags & PM660_TSMC_OSC_WA) && chip->die_temp_chan) {
-		rc = iio_read_channel_processed(chip->die_temp_chan, &die_temp);
-		if (rc < 0) {
-			pr_err("Error in reading die_temp, rc:%d\n", rc);
-			return rc;
-		}
-
-		rc = fg_lerp(fg_tsmc_osc_table, ARRAY_SIZE(fg_tsmc_osc_table),
-					die_temp / 1000, &time_base);
-		if (rc < 0) {
-			pr_err("Error to lookup fg_tsmc_osc_table rc=%d\n", rc);
-			return rc;
-		}
-
-		fg_encode(chip->sp, FG_SRAM_TIMEBASE, time_base, buf);
-		rc = fg_sram_write(chip,
-			chip->sp[FG_SRAM_TIMEBASE].addr_word,
-			chip->sp[FG_SRAM_TIMEBASE].addr_byte, buf,
-			chip->sp[FG_SRAM_TIMEBASE].len, FG_IMA_DEFAULT);
-		if (rc < 0) {
-			pr_err("Error in writing timebase, rc=%d\n", rc);
-			return rc;
-		}
-	}
-
-	return 0;
-}
-
 /* INTERRUPT HANDLERS STAY HERE */
-
 static irqreturn_t fg_mem_xcp_irq_handler(int irq, void *data)
 {
 	struct fg_chip *chip = data;
@@ -4630,10 +4590,6 @@ static irqreturn_t fg_delta_batt_temp_irq_handler(int irq, void *data)
 	chip->health = prop.intval;
 
 	if (chip->last_batt_temp != batt_temp) {
-		rc = fg_adjust_timebase(chip);
-		if (rc < 0)
-			pr_err("Error in adjusting timebase, rc=%d\n", rc);
-
 		rc = fg_adjust_recharge_voltage(chip);
 		if (rc < 0)
 			pr_err("Error in adjusting recharge_voltage, rc=%d\n",
