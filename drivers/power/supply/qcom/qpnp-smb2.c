@@ -2792,8 +2792,10 @@ static int smb2_probe(struct platform_device *pdev)
 		return -EINVAL;
 	}
 /* Huaqin modify for ZQL1650-74 Countrycode Adapter by diganyun at 2018/03/26 start */
+#if 0
 	INIT_DELAYED_WORK(&chg->read_countrycode_work, read_BR_countrycode_work);
 	schedule_delayed_work(&chg->read_countrycode_work, msecs_to_jiffies(30000));
+#endif
 /* Huaqin modify for ZQL1650-74 Countrycode Adapter by diganyun at 2018/03/26 end */
 
 	rc = smb2_chg_config_init(chip);
