@@ -2357,7 +2357,7 @@ extern int asus_get_prop_batt_capacity(struct smb_charger *chg);
 #define CHARGER_LIMIT_EN_PROC_FILE     "driver/charger_limit_enable"
 #define CHARGER_LIMIT_PROC_FILE     "driver/charger_limit"
 
- ssize_t charger_limit_enbale_read_proc(struct file *file, char __user *page, size_t size, loff_t *ppos)
+ssize_t charger_limit_enbale_read_proc(struct file *file, char __user *page, size_t size, loff_t *ppos)
 {
 	char read_data[8]={0};
 	int len = 0;
@@ -2648,8 +2648,12 @@ int32_t get_ID_vadc_voltage(void){
 /* Huaqin modify for ZQL1650-70 Identify Adapter ID by fangaijun at 2018/02/8 end */
 
 /* Huaqin modify for ZQL1650-74 Countrycode Adapter by diganyun at 2018/03/26 start */
-#define COUNTRY_CODE_PATH "/persist/flag/countrycode.txt"
 
+#if 0
+#define COUNTRY_CODE_PATH "/persist/flag/countrycode.txt"
+#endif
+
+#if 0
 void read_BR_countrycode_work(struct work_struct *work)
 {
 	struct file *fp = NULL;
@@ -2712,6 +2716,7 @@ out:
 	}
 	return ;
 }
+#endif
 /* Huaqin modify for ZQL1650-74 Countrycode Adapter by diganyun at 2018/03/26 end */
 
 static int smb2_probe(struct platform_device *pdev)
