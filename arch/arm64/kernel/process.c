@@ -105,6 +105,16 @@ void arch_cpu_idle_dead(void)
 #endif
 
 /*
+ *  Enter non-interruptable CPU halt state
+ */
+static void cpu_halt(void)
+{
+	local_irq_disable();
+	while (1)
+	cpu_do_idle();
+}
+
+/*
  * Called by kexec, immediately prior to machine_kexec().
  *
  * This must completely disable all secondary CPUs; simply causing those CPUs
@@ -120,25 +130,13 @@ void machine_shutdown(void)
 }
 
 /*
- *  Enter non-interruptable CPU halt state
- */
-static void cpu_halt(void)
-{
-	local_irq_disable();
-	while (1)
-	cpu_do_idle();
-}
-
-/*
  * Halting simply requires that the secondary CPUs stop performing any
  * activity (executing tasks, handling interrupts). smp_send_stop()
  * achieves this.
  */
 void machine_halt(void)
 {
-	local_irq_disable();
 	smp_send_stop();
-	while (1);
         cpu_halt();
 }
 
