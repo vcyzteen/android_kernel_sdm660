@@ -116,6 +116,17 @@ void arch_cpu_idle_dead(void)
 void machine_shutdown(void)
 {
 	disable_nonboot_cpus();
+        cpu_halt();
+}
+
+/*
+ *  Enter non-interruptable CPU halt state
+ */
+static void cpu_halt(void)
+{
+	local_irq_disable();
+	while (1)
+	cpu_do_idle();
 }
 
 /*
@@ -128,6 +139,7 @@ void machine_halt(void)
 	local_irq_disable();
 	smp_send_stop();
 	while (1);
+        cpu_halt();
 }
 
 /*
@@ -142,6 +154,7 @@ void machine_power_off(void)
 	smp_send_stop();
 	if (pm_power_off)
 		pm_power_off();
+	cpu_halt();
 }
 
 /*
@@ -176,7 +189,7 @@ void machine_restart(char *cmd)
 	 * Whoops - the architecture was unable to reboot.
 	 */
 	printk("Reboot failed -- System halted\n");
-	while (1);
+        cpu_halt();
 }
 
 /*
