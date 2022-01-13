@@ -12,6 +12,15 @@ config COMMON_CLK_QCOM
 	select REGMAP_MMIO
 	select RESET_CONTROLLER
 
+config SDM_GPUCC_660
+	tristate "SDM660 Graphics Clock Controller"
+	select SDM_GCC_660
+	select QCOM_GDSC
+	help
+	  Support for the graphics clock controller on SDM630/636/660 devices.
+	  Say Y if you want to support graphics controller devices and
+	  functionality such as 3D graphics
+
 config QCOM_CLK_RPM
 	tristate "RPM based Clock Controller"
 	depends on COMMON_CLK_QCOM && MFD_QCOM_RPM
