@@ -285,7 +285,7 @@
 		qcom,mdss-dsi-t-clk-post = <0x1E>;
 		qcom,mdss-dsi-t-clk-pre = <0x38>;
 		qcom,mdss-dsi-bl-min-level = <1>;
-		qcom,mdss-dsi-bl-max-level = <3259>;
+		qcom,mdss-dsi-bl-max-level = <2047>; /* 11 bit */
 		qcom,mdss-dsi-dma-trigger = "trigger_sw";
 		qcom,mdss-dsi-mdp-trigger = "none";
 		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
