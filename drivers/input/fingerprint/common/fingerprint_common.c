@@ -84,7 +84,7 @@ int commonfp_power_on()
 	return ret;
 #endif
 exit:
-	pr_err("power on failed, ret: %d\n", ret);*/
+	pr_err("power on failed, ret: %d\n", ret);
 
 	gpio_direction_output(fp_g.pwr_gpio, 1);
 	pr_info("power on OK!!!\n");
@@ -104,7 +104,7 @@ int commonfp_power_off()
 #endif
 exit:
 	pr_err("power off failed, ret: %d\n", ret);
-	return ret;*/
+	return ret;
 
 	//gpio_direction_output(fp_g.pwr_gpio, 0);
 	pr_info("power off OK !!!\n");
