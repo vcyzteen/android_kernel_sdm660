@@ -38,7 +38,7 @@ static struct of_device_id fp_common_table[] = {
 	{},
 };
 
-init_waitqueue_entry(wait_queue_t * q,struct task_struct * p);
+static int init_waitqueue_entry(wait_queue_t * q,struct task_struct * p);
 
 #if USE_COMMON_PINCTRL
 static int pinctrl_select_pin(struct pinctrl *p,char *name)
