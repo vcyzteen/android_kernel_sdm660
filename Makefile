@@ -398,6 +398,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
                    -Wno-misleading-indentation \
+                   -Wbool-compare \
 		   -std=gnu89 $(call cc-option,-fno-PIE)
 
 ifeq ($(TARGET_BOARD_TYPE),auto)
@@ -636,6 +637,7 @@ CLANG_FLAGS	+= -Werror=unknown-warning-option
 CLANG_FLAGS    += $(call cc-option, -Wno-misleading-indentation)
 CLANG_FLAGS    += $(call cc-option, -Wno-bool-operation)
 CLANG_FLAGS    += $(call cc-option, -Wno-misleading-indentation)
+CLANG_FLAGS    += $(call cc-option, -Wbool-compare)
 KBUILD_CFLAGS	+= $(CLANG_FLAGS)
 KBUILD_AFLAGS	+= $(CLANG_FLAGS)
 endif
@@ -664,6 +666,7 @@ KBUILD_CFLAGS += $(call cc-option, -Wno-misleading-indentation)
 KBUILD_CFLAGS += $(call cc-option, -fno-tree-loop-vectorize)
 KBUILD_CFLAGS += $(call cc-option, -ffunction-sections)
 KBUILD_CFLAGS += $(call cc-option, -fdata-sections)
+KBUILD_CFLAGS += $(call cc-option, -Wbool-compare)
 KBUILD_LDFLAGS += -Wl,--gc-sections
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
