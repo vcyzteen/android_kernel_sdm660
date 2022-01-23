@@ -38,9 +38,7 @@ static struct of_device_id fp_common_table[] = {
 	{},
 };
 
-
-//init_waitqueue_entry(wait_queue_t * q,struct task_struct * p);
-
+init_waitqueue_entry(wait_queue_t * q,struct task_struct * p);
 
 #if USE_COMMON_PINCTRL
 static int pinctrl_select_pin(struct pinctrl *p,char *name)
@@ -77,7 +75,7 @@ exit:
 int commonfp_power_on()
 {
 	int ret = 0;
-/*#if USE_COMMON_PINCTRL
+#if USE_COMMON_PINCTRL
 	ret = pinctrl_select_pin(fp_g.fp_pinctrl,"commonfp_power_on");
 	if(ret)
 		goto exit;
@@ -95,7 +93,7 @@ exit:
 
 int commonfp_power_off()
 {
-/*	int ret = 0;
+	int ret = 0;
 #if USE_COMMON_PINCTRL
 	ret = pinctrl_select_pin(fp_g.fp_pinctrl,"commonfp_power_off");
 	if(ret)
@@ -150,15 +148,15 @@ exit:
 	return ret;
 }
 
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 start */
+#if 1
 int commonfp_request_irq(irq_handler_t handler, irq_handler_t thread_fn, unsigned long flags,
 	    const char *name, void *dev)
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 end */
+#endif
 {
 	int ret = -EINVAL;
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 start */
+#if 1
 	if(handler == NULL && thread_fn == NULL)
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 end */
+#endif
 		return ret;
 	if(irq_flag == 1)
 	{
@@ -166,9 +164,9 @@ int commonfp_request_irq(irq_handler_t handler, irq_handler_t thread_fn, unsigne
 		pr_info("irq has been requested\n");
 		return ret;
 	}
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 start */
+#if 1
 	ret = request_threaded_irq(fp_g.irq_num,handler,thread_fn,flags,name,dev);
-/* Huaqin modify for ZQL1650-143 by wangxiang at 2018/02/09 end */
+#endif
 	if(ret){
 		pr_err("commonfp request irq failed, error number is %d, irq = %d\n",
 			ret, fp_g.irq_num);
@@ -382,14 +380,11 @@ static int __init fingerprint_resource_init(void)
 	return ret;
 }
 
-module_init(fingerprint_resource_init);
-
-
 static void __exit fingerprint_resource_exit(void)
 {
 	platform_driver_unregister(&fingerprint_common);
 }
 
+module_init(fingerprint_resource_init);
 module_exit(fingerprint_resource_exit);
-
 MODULE_LICENSE("GPL");
