@@ -300,7 +300,6 @@
 				qcom,bus-max = <0>;
 				};
 			};
-		};
 
 			qcom,gpu-pwrlevels-2 {
 				#address-cells = <1>;
