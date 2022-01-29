@@ -291,7 +291,6 @@
 		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
 		//qcom,mdss-dsi-reset-sequence = <1 20>, <0 15>, <1 20>;
 		qcom,mdss-dsi-reset-sequence = <1 10>, <0 10>, <1 10>, <0 10>, <1 20>;
-		qcom,mdss-dsi-lp11-init;
 		//qcom,mdss-dsi-init-delay-us = <10000>;
 		/* Huaqin add for ESD check by yuexinghan 20171103 start */
 		qcom,esd-check-enabled;
