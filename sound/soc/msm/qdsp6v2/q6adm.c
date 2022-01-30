@@ -37,8 +37,8 @@
 /* 3 is to account for module, instance & param ID in payload */
 #define ADM_GET_PARAMETER_LENGTH (4096 - APR_HDR_SIZE - 3 * sizeof(uint32_t))
 
-#define ULL_SUPPORTED_BITS_PER_SAMPLE 16
-#define ULL_SUPPORTED_SAMPLE_RATE 48000
+#define ULL_SUPPORTED_BITS_PER_SAMPLE 24
+#define ULL_SUPPORTED_SAMPLE_RATE 96000
 
 #ifndef CONFIG_DOLBY_DAP
 #undef DOLBY_ADM_COPP_TOPOLOGY_ID
