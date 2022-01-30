@@ -63,9 +63,9 @@
 #define MICBIAS_MIN_VAL 1600000
 #define MICBIAS_STEP_SIZE 50000
 
-#define DEFAULT_BOOST_VOLTAGE 5000
-#define MIN_BOOST_VOLTAGE 4000
-#define MAX_BOOST_VOLTAGE 5550
+#define DEFAULT_BOOST_VOLTAGE 6000
+#define MIN_BOOST_VOLTAGE 5000
+#define MAX_BOOST_VOLTAGE 6550
 #define BOOST_VOLTAGE_STEP 50
 
 #define SDM660_CDC_MBHC_BTN_COARSE_ADJ  100 /* in mV */
@@ -3279,7 +3279,7 @@ static struct snd_soc_dai_driver msm_anlg_cdc_i2s_dai[] = {
 			.stream_name = "PDM Capture",
 			.rates = SDM660_CDC_RATES,
 			.formats = SDM660_CDC_FORMATS,
-			.rate_max = 48000,
+			.rate_max = 96000,
 			.rate_min = 8000,
 			.channels_min = 1,
 			.channels_max = 4,
@@ -3293,7 +3293,7 @@ static struct snd_soc_dai_driver msm_anlg_cdc_i2s_dai[] = {
 			.stream_name = "RecordSVA",
 			.rates = SDM660_CDC_RATES,
 			.formats = SDM660_CDC_FORMATS,
-			.rate_max = 48000,
+			.rate_max = 96000,
 			.rate_min = 8000,
 			.channels_min = 1,
 			.channels_max = 2,
@@ -3307,8 +3307,8 @@ static struct snd_soc_dai_driver msm_anlg_cdc_i2s_dai[] = {
 			.stream_name = "VIfeed",
 			.rates = SDM660_CDC_RATES,
 			.formats = SDM660_CDC_FORMATS,
-			.rate_max = 48000,
-			.rate_min = 48000,
+			.rate_max = 96000,
+			.rate_min = 96000,
 			.channels_min = 2,
 			.channels_max = 2,
 		},
