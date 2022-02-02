@@ -393,13 +393,14 @@ LINUXINCLUDE    := \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+KBUILD_CFLAGS   := -Wa -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
                    -Wno-misleading-indentation \
                    -Wbool-compare \
-		   -std=gnu89 $(call cc-option,-fno-PIE)
+                   -mcpu=cortex-a72 \
+		   -std=gnu89 $(call cc-option,-fno-PIE) \
 
 ifeq ($(TARGET_BOARD_TYPE),auto)
 KBUILD_CFLAGS    += -DCONFIG_PLATFORM_AUTO
@@ -667,6 +668,7 @@ KBUILD_CFLAGS += $(call cc-option, -fno-tree-loop-vectorize)
 KBUILD_CFLAGS += $(call cc-option, -ffunction-sections)
 KBUILD_CFLAGS += $(call cc-option, -fdata-sections)
 KBUILD_CFLAGS += $(call cc-option, -Wbool-compare)
+KBUILD_CFLAGS += $(call cc-option, -mcpu=cortex-a72)
 KBUILD_LDFLAGS += -Wl,--gc-sections
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
