@@ -400,7 +400,7 @@ KBUILD_CFLAGS   := -Wa -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
                    -Wno-misleading-indentation \
                    -Wbool-compare \
                    -mcpu=cortex-a72 \
-		   -std=gnu89 $(call cc-option,-fno-PIE) \
+		   -std=gnu89 $(call cc-option,-fno-PIE)
 
 ifeq ($(TARGET_BOARD_TYPE),auto)
 KBUILD_CFLAGS    += -DCONFIG_PLATFORM_AUTO
