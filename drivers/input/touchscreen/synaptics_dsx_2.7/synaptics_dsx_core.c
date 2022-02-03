@@ -5199,8 +5199,7 @@ static void __exit synaptics_rmi4_exit(void)
 	return;
 }
 
-// module_init(synaptics_rmi4_exit);
-late_initcall(synaptics_rmi4_init);
+module_init(synaptics_rmi4_init);
 module_exit(synaptics_rmi4_exit);
 
 #ifdef CONFIG_MACH_ASUS_X00T
