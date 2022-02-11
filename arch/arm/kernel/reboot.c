@@ -83,16 +83,6 @@ void soft_restart(unsigned long addr)
 }
 
 /*
- *  Enter non-interruptable CPU halt state
- */
-static void cpu_halt(void)
-{
-	local_irq_disable();
-	while (1)
-		cpu_do_idle();
-}
-
-/*
  * Called by kexec, immediately prior to machine_kexec().
  *
  * This must completely disable all secondary CPUs; simply causing those CPUs
@@ -104,7 +94,6 @@ static void cpu_halt(void)
 void machine_shutdown(void)
 {
 	disable_nonboot_cpus();
-        cpu_halt();
 }
 
 /*
@@ -114,8 +103,11 @@ void machine_shutdown(void)
  */
 void machine_halt(void)
 {
+	local_irq_disable();
 	smp_send_stop();
-        cpu_halt();
+
+	local_irq_disable();
+	while (1);
 }
 
 /*
@@ -131,7 +123,6 @@ void machine_power_off(void)
 
 	if (pm_power_off)
 		pm_power_off();
-        cpu_halt();
 }
 
 #ifdef CONFIG_ARM_FLUSH_CONSOLE_ON_RESTART
@@ -189,5 +180,6 @@ void machine_restart(char *cmd)
 
 	/* Whoops - the platform was unable to reboot. Tell the user! */
 	printk("Reboot failed -- System halted\n");
-	cpu_halt();
+	local_irq_disable();
+	while (1);
 }
