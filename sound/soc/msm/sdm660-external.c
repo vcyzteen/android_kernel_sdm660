@@ -206,7 +206,7 @@ static int slim_get_sample_rate_val(int sample_rate)
 		sample_rate_val = 10;
 		break;
 	default:
-		sample_rate_val = 4;
+		sample_rate_val = 6;
 		break;
 	}
 	return sample_rate_val;
@@ -251,7 +251,7 @@ static int slim_get_sample_rate(int value)
 		sample_rate = SAMPLING_RATE_384KHZ;
 		break;
 	default:
-		sample_rate = SAMPLING_RATE_48KHZ;
+		sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	}
 	return sample_rate;
@@ -297,7 +297,7 @@ static int slim_get_bit_format(int val)
 		bit_fmt = SNDRV_PCM_FORMAT_S32_LE;
 		break;
 	default:
-		bit_fmt = SNDRV_PCM_FORMAT_S16_LE;
+		bit_fmt = SNDRV_PCM_FORMAT_S24_LE;
 		break;
 	}
 	return bit_fmt;
@@ -337,6 +337,9 @@ static int msm_bt_sample_rate_get(struct snd_kcontrol *kcontrol,
 	 * value.
 	 */
 	switch (slim_rx_cfg[SLIM_RX_7].sample_rate) {
+        case SAMPLING_RATE_96KHZ:
+		ucontrol->value.integer.value[0] = 3;
+		break;
 	case SAMPLING_RATE_48KHZ:
 		ucontrol->value.integer.value[0] = 2;
 		break;
@@ -366,6 +369,9 @@ static int msm_bt_sample_rate_put(struct snd_kcontrol *kcontrol,
 		slim_rx_cfg[SLIM_RX_7].sample_rate = SAMPLING_RATE_48KHZ;
 		slim_tx_cfg[SLIM_TX_7].sample_rate = SAMPLING_RATE_48KHZ;
 		break;
+        case 3:
+		slim_tx_cfg[SLIM_TX_7].sample_rate = SAMPLING_RATE_96KHZ;
+		break;
 	case 0:
 	default:
 		slim_rx_cfg[SLIM_RX_7].sample_rate = SAMPLING_RATE_8KHZ;
@@ -385,6 +391,9 @@ static int msm_bt_sample_rate_rx_get(struct snd_kcontrol *kcontrol,
 					struct snd_ctl_elem_value *ucontrol)
 {
 	switch (slim_rx_cfg[SLIM_RX_7].sample_rate) {
+        case SAMPLING_RATE_96KHZ:
+		ucontrol->value.integer.value[0] = 3;
+		break;
 	case SAMPLING_RATE_48KHZ:
 		ucontrol->value.integer.value[0] = 2;
 		break;
@@ -412,6 +421,9 @@ static int msm_bt_sample_rate_rx_put(struct snd_kcontrol *kcontrol,
 	case 2:
 		slim_rx_cfg[SLIM_RX_7].sample_rate = SAMPLING_RATE_48KHZ;
 		break;
+        case 3:
+		slim_tx_cfg[SLIM_TX_7].sample_rate = SAMPLING_RATE_96KHZ;
+		break;
 	case 0:
 	default:
 		slim_rx_cfg[SLIM_RX_7].sample_rate = SAMPLING_RATE_8KHZ;
@@ -429,6 +441,9 @@ static int msm_bt_sample_rate_tx_get(struct snd_kcontrol *kcontrol,
 					struct snd_ctl_elem_value *ucontrol)
 {
 	switch (slim_tx_cfg[SLIM_TX_7].sample_rate) {
+        case SAMPLING_RATE_96KHZ:
+		ucontrol->value.integer.value[0] = 3;
+		break;
 	case SAMPLING_RATE_48KHZ:
 		ucontrol->value.integer.value[0] = 2;
 		break;
@@ -455,6 +470,9 @@ static int msm_bt_sample_rate_tx_put(struct snd_kcontrol *kcontrol,
 		break;
 	case 2:
 		slim_tx_cfg[SLIM_TX_7].sample_rate = SAMPLING_RATE_48KHZ;
+		break;
+        case 3:
+		slim_tx_cfg[SLIM_TX_7].sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	case 0:
 	default:
@@ -1003,7 +1021,7 @@ int msm_ext_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
 		break;
 
 	default:
-		rate->min = rate->max = SAMPLING_RATE_48KHZ;
+		rate->min = rate->max = SAMPLING_RATE_96KHZ;
 		break;
 	}
 	return rc;
