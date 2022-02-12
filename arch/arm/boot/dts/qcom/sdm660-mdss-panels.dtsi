@@ -149,7 +149,7 @@
 	qcom,mdss-dsi-panel-on-check-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
-	qcom,mdss-dsi-min-refresh-rate = <24>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 };
 
@@ -159,7 +159,6 @@
 		23 1e 07 08 05 03 04 a0
 		23 1e 07 08 05 03 04 a0
 		23 18 07 08 04 03 04 a0];
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -185,7 +184,7 @@
 			23 20 06 09 05 03 04 a0
 			23 20 06 09 05 03 04 a0
 			23 2e 06 08 05 03 04 a0];
-	qcom,mdss-dsi-min-refresh-rate = <53>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
@@ -198,11 +197,10 @@
 		20 1d 05 07 03 03 04 a0
 		20 12 05 06 03 13 04 a0];
 	qcom,config-select = <&dsi_nt35597_truly_dsc_video_config2>;
-	qcom,mdss-dsi-min-refresh-rate = <53>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -235,7 +233,7 @@
 		23 1e 07 08 05 03 04 a0
 		23 1e 07 08 05 03 04 a0
 		23 18 07 08 04 03 04 a0];
-	qcom,mdss-dsi-min-refresh-rate = <53>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
@@ -255,11 +253,10 @@
 		24 1e 08 09 05 03 04 a0
 		24 1e 08 09 05 03 04 a0
 		24 1a 08 09 05 03 04 a0];
-	qcom,mdss-dsi-min-refresh-rate = <48>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -275,7 +272,6 @@
 		24 1e 08 09 05 03 04 a0
 		24 1e 08 09 05 03 04 a0
 		24 1a 08 09 05 03 04 a0];
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -291,11 +287,10 @@
 		23 1e 08 09 05 03 04 a0
 		23 1e 08 09 05 03 04 a0
 		23 1a 08 09 05 03 04 a0];
-	qcom,mdss-dsi-min-refresh-rate = <48>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -312,7 +307,6 @@
 		23 1e 08 09 05 03 04 a0
 		23 1e 08 09 05 03 04 a0
 		23 1a 08 09 05 03 04 a0];
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -350,7 +344,6 @@
 		24 1f 08 09 05 03 04 a0
 		24 1f 08 09 05 03 04 a0
 		24 1c 08 09 05 03 04 a0];
-	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
@@ -358,7 +351,7 @@
 	qcom,mdss-dsi-panel-on-check-value = <0x9d 0x9d 0x9d 0x9d>;
 	qcom,mdss-dsi-panel-status-read-length = <4>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
-	qcom,mdss-dsi-min-refresh-rate = <48>;
+	qcom,mdss-dsi-min-refresh-rate = <60>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update =
