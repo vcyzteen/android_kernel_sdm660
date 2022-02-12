@@ -475,7 +475,7 @@ static int tdm_get_sample_rate(int value)
 		sample_rate = SAMPLING_RATE_384KHZ;
 		break;
 	default:
-		sample_rate = SAMPLING_RATE_48KHZ;
+		sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	}
 	return sample_rate;
@@ -514,7 +514,7 @@ static int tdm_get_sample_rate_val(int sample_rate)
 		sample_rate_val = 8;
 		break;
 	default:
-		sample_rate_val = 4;
+		sample_rate_val = 5;
 		break;
 	}
 	return sample_rate_val;
@@ -687,7 +687,7 @@ static int tdm_get_format(int value)
 		format = SNDRV_PCM_FORMAT_S32_LE;
 		break;
 	default:
-		format = SNDRV_PCM_FORMAT_S16_LE;
+		format = SNDRV_PCM_FORMAT_S24_LE;
 		break;
 	}
 	return format;
@@ -708,7 +708,7 @@ static int tdm_get_format_val(int format)
 		value = 2;
 		break;
 	default:
-		value = 0;
+		value = 1;
 		break;
 	}
 	return value;
@@ -732,7 +732,7 @@ static int mi2s_get_format(int value)
 		format = SNDRV_PCM_FORMAT_S32_LE;
 		break;
 	default:
-		format = SNDRV_PCM_FORMAT_S16_LE;
+		format = SNDRV_PCM_FORMAT_S24_LE;
 		break;
 	}
 	return format;
@@ -756,7 +756,7 @@ static int mi2s_get_format_value(int format)
 		value = 3;
 		break;
 	default:
-		value = 0;
+		value = 1;
 		break;
 	}
 	return value;
@@ -1116,7 +1116,7 @@ static int mi2s_get_sample_rate_val(int sample_rate)
 		sample_rate_val = 6;
 		break;
 	default:
-		sample_rate_val = 4;
+		sample_rate_val = 5;
 		break;
 	}
 	return sample_rate_val;
@@ -1149,7 +1149,7 @@ static int mi2s_get_sample_rate(int value)
 		sample_rate = SAMPLING_RATE_192KHZ;
 		break;
 	default:
-		sample_rate = SAMPLING_RATE_48KHZ;
+		sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	}
 	return sample_rate;
@@ -1457,7 +1457,7 @@ static int usb_audio_rx_sample_rate_put(struct snd_kcontrol *kcontrol,
 		usb_rx_cfg.sample_rate = SAMPLING_RATE_8KHZ;
 		break;
 	default:
-		usb_rx_cfg.sample_rate = SAMPLING_RATE_48KHZ;
+		usb_rx_cfg.sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	}
 
@@ -1509,7 +1509,7 @@ static int usb_audio_rx_format_put(struct snd_kcontrol *kcontrol,
 		break;
 	case 0:
 	default:
-		usb_rx_cfg.bit_format = SNDRV_PCM_FORMAT_S16_LE;
+		usb_rx_cfg.bit_format = SNDRV_PCM_FORMAT_S24_LE;
 		break;
 	}
 	pr_debug("%s: usb_audio_rx_format = %d, ucontrol value = %ld\n",
@@ -1574,7 +1574,7 @@ static int usb_audio_tx_sample_rate_get(struct snd_kcontrol *kcontrol,
 		sample_rate_val = 0;
 		break;
 	default:
-		sample_rate_val = 6;
+		sample_rate_val = 7;
 		break;
 	}
 
@@ -1619,7 +1619,7 @@ static int usb_audio_tx_sample_rate_put(struct snd_kcontrol *kcontrol,
 		usb_tx_cfg.sample_rate = SAMPLING_RATE_8KHZ;
 		break;
 	default:
-		usb_tx_cfg.sample_rate = SAMPLING_RATE_48KHZ;
+		usb_tx_cfg.sample_rate = SAMPLING_RATE_96KHZ;
 		break;
 	}
 
@@ -1671,7 +1671,7 @@ static int usb_audio_tx_format_put(struct snd_kcontrol *kcontrol,
 		break;
 	case 0:
 	default:
-		usb_tx_cfg.bit_format = SNDRV_PCM_FORMAT_S16_LE;
+		usb_tx_cfg.bit_format = SNDRV_PCM_FORMAT_S24_LE;
 		break;
 	}
 	pr_debug("%s: usb_audio_tx_format = %d, ucontrol value = %ld\n",
@@ -2371,7 +2371,7 @@ int msm_common_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
 		break;
 
 	default:
-		rate->min = rate->max = SAMPLING_RATE_48KHZ;
+		rate->min = rate->max = SAMPLING_RATE_96KHZ;
 		break;
 	}
 	return rc;
