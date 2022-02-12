@@ -157,10 +157,13 @@ static struct snd_pcm_hardware msm_pcm_hardware = {
 				SNDRV_PCM_INFO_MMAP_VALID |
 				SNDRV_PCM_INFO_INTERLEAVED),
 	.formats =              SNDRV_PCM_FMTBIT_S16_LE |
+                                SNDRV_PCM_FMTBIT_S24_LE |
 				SNDRV_PCM_FMTBIT_SPECIAL,
-	.rates =                SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+	.rates =                SNDRV_PCM_RATE_8000 |
+                                SNDRV_PCM_RATE_16000 |
+                                SNDRV_PCM_RATE_96000,
 	.rate_min =             8000,
-	.rate_max =             16000,
+	.rate_max =             96000,
 	.channels_min =         1,
 	.channels_max =         1,
 	.buffer_bytes_max =	sizeof(struct hpcm_buf_node) * HPCM_MAX_Q_LEN,
