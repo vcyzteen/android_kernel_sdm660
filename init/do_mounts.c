@@ -227,10 +227,6 @@ dev_t name_to_dev_t(const char *name)
 		}
 		return res;
 	}
-	if (strncmp(name, "PARTLABEL=", 10) == 0)
-		return devt_from_partlabel(name + 10);
-	if (strncmp(name, "/dev/", 5) == 0)
-		return devt_from_devname(name + 5);
 #endif
 
 	if (strncmp(name, "/dev/", 5) != 0) {
