@@ -51,9 +51,10 @@ static struct snd_pcm_hardware msm_afe_hardware_playback = {
 				SNDRV_PCM_FMTBIT_S24_LE,
 	.rates =                (SNDRV_PCM_RATE_8000 |
 				SNDRV_PCM_RATE_16000 |
-				SNDRV_PCM_RATE_48000),
+				SNDRV_PCM_RATE_48000 |
+                                SNDRV_PCM_RATE_96000),
 	.rate_min =             8000,
-	.rate_max =             48000,
+	.rate_max =             96000,
 	.channels_min =         1,
 	.channels_max =         6,
 	.buffer_bytes_max =     MAX_PLAYBACK_PERIOD_SIZE *
@@ -74,9 +75,10 @@ static struct snd_pcm_hardware msm_afe_hardware_capture = {
 				SNDRV_PCM_FMTBIT_S24_LE,
 	.rates =                (SNDRV_PCM_RATE_8000 |
 				SNDRV_PCM_RATE_16000 |
-				SNDRV_PCM_RATE_48000),
+				SNDRV_PCM_RATE_48000 |
+                                SNDRV_PCM_RATE_96000),
 	.rate_min =             8000,
-	.rate_max =             48000,
+	.rate_max =             96000,
 	.channels_min =         1,
 	.channels_max =         6,
 	.buffer_bytes_max =     MAX_CAPTURE_PERIOD_SIZE *
@@ -410,7 +412,7 @@ static int msm_afe_capture_prepare(struct snd_pcm_substream *substream)
 
 /* Conventional and unconventional sample rate supported */
 static unsigned int supported_sample_rates[] = {
-	8000, 16000, 48000
+	8000, 16000, 48000, 96000
 };
 
 static struct snd_pcm_hw_constraint_list constraints_sample_rates = {
