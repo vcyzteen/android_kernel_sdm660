@@ -398,8 +398,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
                    -Wno-misleading-indentation \
                    -Wbool-compare \
-                   -mcpu=cortex-a72 \
-		   -std=gnu89 $(call cc-option,-fno-PIE)
+		   -std=gnu89
 
 ifeq ($(TARGET_BOARD_TYPE),auto)
 KBUILD_CFLAGS    += -DCONFIG_PLATFORM_AUTO
@@ -667,8 +666,7 @@ KBUILD_CFLAGS += $(call cc-option, -fno-tree-loop-vectorize)
 KBUILD_CFLAGS += $(call cc-option, -ffunction-sections)
 KBUILD_CFLAGS += $(call cc-option, -fdata-sections)
 KBUILD_CFLAGS += $(call cc-option, -Wbool-compare)
-KBUILD_CFLAGS += $(call cc-option, -mcpu=cortex-a72)
-KBUILD_LDFLAGS += -Wl,--gc-sections
+KBUILD_LDFLAGS += --gc-sections
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
