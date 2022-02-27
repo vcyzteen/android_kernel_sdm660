@@ -46,7 +46,7 @@ static void change_elevator(struct req_queue_data *r, bool use_bfq)
 
 	if (use_bfq) {
 		strcpy(r->prev_e, q->elevator->type->elevator_name);
-		elevator_change(q, bfq_IOSCHED);
+		elevator_change(q, BFQ_IOSCHED);
 	} else {
 		elevator_change(q, r->prev_e);
 	}
