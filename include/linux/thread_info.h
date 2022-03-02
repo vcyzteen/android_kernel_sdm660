@@ -143,6 +143,4 @@ static inline void check_object_size(const void *ptr, unsigned long n,
 { }
 #endif /* CONFIG_HARDENED_USERCOPY */
 
-#endif	/* __KERNEL__ */
-
-#endif /* _LINUX_THREAD_INFO_H */
+#endif /* __KERNEL__ */
