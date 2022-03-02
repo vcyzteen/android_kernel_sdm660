@@ -16,7 +16,6 @@ struct compat_timespec;
 
 #ifdef CONFIG_THREAD_INFO_IN_TASK
 #define current_thread_info() ((struct thread_info *)current)
-#endif
 
 /*
  * For CONFIG_THREAD_INFO_IN_TASK kernels we need <asm/current.h> for the
@@ -144,3 +143,5 @@ static inline void check_object_size(const void *ptr, unsigned long n,
 #endif /* CONFIG_HARDENED_USERCOPY */
 
 #endif /* __KERNEL__ */
+
+#endif /* CONFIG_THREAD_INFO_IN_TASK */
