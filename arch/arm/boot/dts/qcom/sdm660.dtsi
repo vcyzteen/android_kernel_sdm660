@@ -864,12 +864,12 @@
 
 		qcom,vdd-gfx-rstr{
 			qcom,vdd-rstr-reg = "vdd-gfx";
-			qcom,levels = <5 6 6>; /* Nominal, Turbo, Turbo */
+			qcom,levels = <5 6 7>; /* Nominal, Turbo, Turbo */
 			qcom,min-level = <1>; /* No Request */
 		};
 
 		msm_thermal_freq: qcom,vdd-apps-rstr{
-			qcom,vdd-rstr-reg = "vdd-apps";
+			qcom,disable-vdd-rstr-reg = "vdd-apps";
 			qcom,levels = <1248000>;
 			qcom,freq-req;
 		};
